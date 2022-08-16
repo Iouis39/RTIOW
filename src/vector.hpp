@@ -1,0 +1,186 @@
+#pragma once
+
+#include <iostream>
+#include <cmath>
+
+
+template<typename T>
+class Vec3 {
+    private:
+        T x, y, z;
+
+    public:
+        constexpr Vec3() : x(T(0)), y(T(0)), z(T(0)) {}
+        constexpr Vec3(const T &xyzValue) : x(xyzValue), y(xyzValue), z(xyzValue) {}
+        constexpr Vec3(T xValue, T yValue, T zValue) : x(xValue), y(yValue), z(zValue) {}
+
+        Vec3 operator+(const Vec3<T> &summand) const; 
+        Vec3 operator-(const Vec3<T> &subtrahend) const;
+        Vec3 operator*(const T &factor) const;
+        Vec3 operator/(const T &divisor) const;
+        Vec3 operator+=(const Vec3<T> &summand) const;
+        Vec3 operator-=(const Vec3<T> &subtrahend) const;
+        Vec3 operator*=(const T &factor) const;
+        Vec3 operator/=(const T &divisior) const;
+        
+        std::ostream& operator<<(std::ostream &out) const;
+
+        T getX() const;
+        T getY() const;
+        T getZ() const;
+
+        T length() const;
+        T lengthSquared() const;
+        Vec3<T> normalize() const; 
+        Vec3<T> crossProduct(const Vec3<T> &vec) const;
+        T dotProduct(const Vec3<T> &vec) const;
+        void print() const;
+};
+
+/* ***************************************************************** */
+
+template<typename T>
+T Vec3<T>::getX() const {
+    return x;
+}
+
+template<typename T>
+T Vec3<T>::getY() const {
+    return y;
+}
+
+template<typename T>
+T Vec3<T>::getZ() const {
+    return z;
+}
+
+template<typename T> 
+T Vec3<T>::length() const {
+    return sqrt(x * x + y * y + z * z);
+ 
+}
+
+template<typename T>
+T Vec3<T>::lengthSquared() const {
+    return x*x + y*y + z*z;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::normalize() const {
+    T vectorLength = length();
+    Vec3<T> unitVector;
+
+    if (vectorLength > 0) {
+        double lengthBuffer = 1 / vectorLength;
+        unitVector.x = x * lengthBuffer;
+        unitVector.y = y * lengthBuffer;
+        unitVector.z = z * lengthBuffer;
+    }
+
+     return unitVector;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::crossProduct(const Vec3<T> &vec) const {
+    Vec3<T> crossVec;
+    crossVec.x = y * vec.z - z * vec.y;
+    crossVec.y = z * vec.x - x * vec.z;
+    crossVec.z = x * vec.y - y * vec.x;
+
+    return crossVec;
+}
+
+template<typename T>
+T Vec3<T>::dotProduct(const Vec3<T> &vec) const {
+    T scalar;
+    scalar = x * vec.x + y * vec.y + z * vec.z;
+}
+
+template<typename T>
+void Vec3<T>::print() const {
+    std::cout << "[";
+    std::cout << "{\"X\": " << x << ',' << '\n';
+    std::cout << "\"Y\": " << y << ',' << '\n';
+    std::cout << "\"Z\": " << z << "}" << '\n';
+    std::cout << "]" << std::endl;
+
+}
+
+/* ***************************************************************** */
+
+template<typename T>
+Vec3<T> Vec3<T>::operator+(const Vec3<T> &summand) const {
+    Vec3<T> sum;
+    sum.x = x + summand.x;
+    sum.y = y + summand.y;
+    sum.z = z + summand.z;
+
+    sum(x + 1);
+
+    return sum;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator-(const Vec3<T> &subtrahend) const {
+    Vec3<T> diff;
+    diff.x = x - subtrahend.x;
+    diff.y = y - subtrahend.y;
+    diff.z = z - subtrahend.z;
+
+    return diff;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator*(const T &factor) const {
+    Vec3<T> product;
+    product.x = x * factor;
+    product.y = y * factor;
+    product.z = z * factor;
+
+    return product;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator/(const T &divisor) const {
+    Vec3<T> quotient;
+    quotient.x = x * 1/divisor;
+    quotient.y = y * 1/divisor;
+    quotient.z = z * 1/divisor;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator+=(const Vec3<T> &summand) const {
+    x += summand.x;
+    y += summand.y;
+    z += summand.y;
+
+    return *this;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator-=(const Vec3<T> &subtrahend) const {
+    x -= subtrahend.x;
+    y -= subtrahend.y;
+    z -= subtrahend.y;
+
+    return *this;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator*=(const T &factor) const {
+    x *= factor;
+    y *= factor;
+    z *= factor;
+
+    return *this;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator/=(const T &divisor) const {
+    return *this *= 1/divisor;
+}
+
+template<typename T>
+std::ostream& Vec3<T>::operator<<(std::ostream &out) const {
+   return out << x << ' ' << y << ' ' << z;
+}
