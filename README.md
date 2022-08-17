@@ -1,3 +1,1 @@
-# vector-class
-# RTIOW
-# RTIOW
+# Ray Tracing In One Weekend
