@@ -4,9 +4,17 @@
 #include "ray.hpp"
 #include "color.hpp"
 
+template<typename T>
+Vec3<T> rayColor(const Ray<T> &r) {
+    Vec3<T> unitDirection;
+    
+    unitDirection.print();
+    return unitDirection;
+}
 
 int main() {
     // Image
+    /*
     const int imageWidth = 256;
     const int imageHeight = 256;
 
@@ -22,10 +30,14 @@ int main() {
     }
 
     std::cerr << "\nDone.\n";
+    */
 
-    Vec3<int> a(1, 3, 4);
-    Vec3<int> b(1, 1, 1);
-    Ray<int> ray(a, b);
+    Vec3<double> a(1, 2, 3);
+    Vec3<double> b(5, 4, 5);
+    Ray<double> r(a, b);
+    r.normalizeD();
+
+    r.printRay();
 
     return 0;
 }

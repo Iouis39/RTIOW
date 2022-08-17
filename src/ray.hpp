@@ -14,6 +14,8 @@ class Ray {
         Vec3<T> getO() const;
         Vec3<T> getD() const;
         Vec3<T> at(T t) const;
+        void normalizeD();
+        void printRay() const;
 
 
 };
@@ -33,4 +35,25 @@ Vec3<T> Ray<T>::getD() const {
 template<typename T>
 Vec3<T> Ray<T>::at(T t) const {
     return o + t * d;
+}
+
+template<typename T>
+void Ray<T>::normalizeD() {
+    d.normalize();
+}
+
+template<typename T>
+void Ray<T>::printRay() const {
+    std::cout << "[";
+    std::cout << "{\"X\": " << d.getX() << ',' << '\n';
+    std::cout << "\"Y\": " << d.getY() << ',' << '\n';
+    std::cout << "\"Z\": " << d.getZ() << ',' << '\n';
+    std::cout << "\"Length\": " << d.length() << "}" << '\n';
+    std::cout << "]" << '\n';
+
+    std::cout << "[";
+    std::cout << "{\"X\": " << o.getX() << ',' << '\n';
+    std::cout << "\"Y\": " << o.getY() << ',' << '\n';
+    std::cout << "\"Z\": " << o.getZ() << "}" << '\n';
+    std::cout << "]" << std::endl;
 }

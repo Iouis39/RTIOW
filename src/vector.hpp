@@ -31,7 +31,7 @@ class Vec3 {
 
         T length() const;
         T lengthSquared() const;
-        Vec3<T> normalize() const; 
+        void normalize(); 
         Vec3<T> crossProduct(const Vec3<T> &vec) const;
         T dotProduct(const Vec3<T> &vec) const;
         void print() const;
@@ -66,18 +66,15 @@ T Vec3<T>::lengthSquared() const {
 }
 
 template<typename T>
-Vec3<T> Vec3<T>::normalize() const {
+void Vec3<T>::normalize() {
     T vectorLength = length();
-    Vec3<T> unitVector;
 
     if (vectorLength > 0) {
         double lengthBuffer = 1 / vectorLength;
-        unitVector.x = x * lengthBuffer;
-        unitVector.y = y * lengthBuffer;
-        unitVector.z = z * lengthBuffer;
+        x *= lengthBuffer;
+        y *= lengthBuffer;
+        z *= lengthBuffer;
     }
-
-     return unitVector;
 }
 
 template<typename T>
@@ -101,9 +98,9 @@ void Vec3<T>::print() const {
     std::cout << "[";
     std::cout << "{\"X\": " << x << ',' << '\n';
     std::cout << "\"Y\": " << y << ',' << '\n';
-    std::cout << "\"Z\": " << z << "}" << '\n';
+    std::cout << "\"Z\": " << z << "," << '\n';
+    std::cout << "\"Length\": " << length() << "}" << '\n';
     std::cout << "]" << std::endl;
-
 }
 
 /* ***************************************************************** */
