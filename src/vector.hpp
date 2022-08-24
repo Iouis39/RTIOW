@@ -12,16 +12,16 @@ class Vec3 {
     public:
         constexpr Vec3() : x(T(0)), y(T(0)), z(T(0)) {}
         constexpr Vec3(const T &xyzValue) : x(xyzValue), y(xyzValue), z(xyzValue) {}
-        constexpr Vec3(T xValue, T yValue, T zValue) : x(xValue), y(yValue), z(zValue) {}
+        constexpr Vec3(T const &xValue, T const &yValue, T const &zValue) : x(xValue), y(yValue), z(zValue) {}
 
         Vec3 operator+(const Vec3<T> &summand) const; 
         Vec3 operator-(const Vec3<T> &subtrahend) const;
         Vec3 operator*(const T &factor) const;
         Vec3 operator/(const T &divisor) const;
-        Vec3 operator+=(const Vec3<T> &summand) const;
-        Vec3 operator-=(const Vec3<T> &subtrahend) const;
-        Vec3 operator*=(const T &factor) const;
-        Vec3 operator/=(const T &divisior) const;
+        Vec3 operator+=(const Vec3<T> &summand);
+        Vec3 operator-=(const Vec3<T> &subtrahend);
+        Vec3 operator*=(const T &factor);
+        Vec3 operator/=(const T &divisior);
         
         std::ostream& operator<<(std::ostream &out) const;
 
@@ -112,8 +112,6 @@ Vec3<T> Vec3<T>::operator+(const Vec3<T> &summand) const {
     sum.y = y + summand.y;
     sum.z = z + summand.z;
 
-    sum(x + 1);
-
     return sum;
 }
 
@@ -130,23 +128,30 @@ Vec3<T> Vec3<T>::operator-(const Vec3<T> &subtrahend) const {
 template<typename T>
 Vec3<T> Vec3<T>::operator*(const T &factor) const {
     Vec3<T> product;
-    product.x = x * factor;
-    product.y = y * factor;
-    product.z = z * factor;
+    product.x = factor * x;
+    product.y = factor * y;
+    product.z = factor * z;
 
     return product;
 }
 
 template<typename T>
-Vec3<T> Vec3<T>::operator/(const T &divisor) const {
-    Vec3<T> quotient;
-    quotient.x = x * 1/divisor;
-    quotient.y = y * 1/divisor;
-    quotient.z = z * 1/divisor;
+Vec3<T> operator*(const T &factor, const Vec3<T> &vec) {
+    return vec * factor;
 }
 
 template<typename T>
-Vec3<T> Vec3<T>::operator+=(const Vec3<T> &summand) const {
+Vec3<T> Vec3<T>::operator/(const T &divisor) const {
+    Vec3<T> quotient;
+    quotient.x = x * 1 / divisor;
+    quotient.y = y * 1 / divisor;
+    quotient.z = z * 1 / divisor;
+
+    return quotient;
+}
+
+template<typename T>
+Vec3<T> Vec3<T>::operator+=(const Vec3<T> &summand) {
     x += summand.x;
     y += summand.y;
     z += summand.y;
@@ -155,7 +160,7 @@ Vec3<T> Vec3<T>::operator+=(const Vec3<T> &summand) const {
 }
 
 template<typename T>
-Vec3<T> Vec3<T>::operator-=(const Vec3<T> &subtrahend) const {
+Vec3<T> Vec3<T>::operator-=(const Vec3<T> &subtrahend) {
     x -= subtrahend.x;
     y -= subtrahend.y;
     z -= subtrahend.y;
@@ -164,7 +169,7 @@ Vec3<T> Vec3<T>::operator-=(const Vec3<T> &subtrahend) const {
 }
 
 template<typename T>
-Vec3<T> Vec3<T>::operator*=(const T &factor) const {
+Vec3<T> Vec3<T>::operator*=(const T &factor) {
     x *= factor;
     y *= factor;
     z *= factor;
@@ -173,11 +178,19 @@ Vec3<T> Vec3<T>::operator*=(const T &factor) const {
 }
 
 template<typename T>
-Vec3<T> Vec3<T>::operator/=(const T &divisor) const {
+Vec3<T> Vec3<T>::operator/=(const T &divisor) {
     return *this *= 1/divisor;
 }
 
 template<typename T>
 std::ostream& Vec3<T>::operator<<(std::ostream &out) const {
    return out << x << ' ' << y << ' ' << z;
+}
+
+/* ***************************************************************** */
+
+template<typename T>
+T dotProduct(const Vec3<T> &Vec1, const Vec3<T> &Vec2) {
+    T scalar;
+    return (scalar = Vec1.getX() * Vec2.getX() + Vec1.getY() * Vec2.getY() + Vec1.getZ() * Vec2.getZ());
 }

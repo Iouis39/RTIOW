@@ -9,7 +9,7 @@ class Ray {
 
     public:
         constexpr Ray() : o(Vec3<T>(0)), d(Vec3<T>(0)) {}
-        constexpr Ray(Vec3<T> &origin, Vec3<T> &direction) : o(origin), d(direction) {}
+        constexpr Ray(Vec3<T> const &origin, Vec3<T> const &direction) : o(origin), d(direction) {}
 
         Vec3<T> getO() const;
         Vec3<T> getD() const;
